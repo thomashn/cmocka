@@ -1,0 +1,17 @@
+.{
+    .name = .cmocka,
+    .version = "2.0.2",
+    .dependencies = .{
+        .cmocka = .{
+            .url = "git+https://gitlab.com/cmocka/cmocka.git?ref=cmocka-2.0.2#fefa2b8a023121f7235e18ed17249e4012dd144f",
+            .hash = "N-V-__8AAHOFDQBCnxaVSmTnwzgESqH32Sgfl6jYvQBnFxnK",
+        },
+    },
+    .minimum_zig_version = "0.16.0",
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "README.md",
+    },
+    .fingerprint = 0xcb681e2572126f23,
+}
