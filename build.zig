@@ -27,6 +27,7 @@ pub fn build(b: *std.Build) void {
 
     const is_windows = target.result.os.tag == .windows;
     const is_unix = target.result.os.tag == .linux or target.result.os.tag == .macos;
+    const is_linux = target.result.os.tag == .linux;
     const is_msvc = target.result.os.tag == .windows and target.result.abi == .msvc;
     const is_big_endian = target.result.cpu.arch.endian() == .big;
     const ptr_size = target.result.ptrBitWidth() / 8;
@@ -43,13 +44,13 @@ pub fn build(b: *std.Build) void {
         .PLUGINDIR = false,
         .SYSCONFDIR = false,
         .BINARYDIR = false,
-        .SOURCEDIR = false,
+        .SOURCEDIR = root.getPath(b),
 
         .HAVE_ASSERT_H = true,
         .HAVE_DLFCN_H = is_unix,
         .HAVE_INTTYPES_H = true,
         .HAVE_IO_H = is_windows,
-        .HAVE_MALLOC_H = true,
+        .HAVE_MALLOC_H = is_linux,
         .HAVE_MEMORY_H = true,
         .HAVE_SETJMP_H = true,
         .HAVE_SIGNAL_H = true,
