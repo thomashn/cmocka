@@ -32,11 +32,6 @@ pub fn build(b: *std.Build) void {
     const is_big_endian = target.result.cpu.arch.endian() == .big;
     const ptr_size = target.result.ptrBitWidth() / 8;
 
-    var writer = std.Io.Writer.Allocating.init(b.allocator);
-    defer writer.deinit();
-    root.format(&writer.writer) catch @panic("failed to get src path");
-    const src_dir = writer.writer.buffer[0..writer.writer.end];
-
     const config = .{
         .PACKAGE = "cmocka",
         .PROJECT_NAME = "cmocka",
@@ -49,8 +44,7 @@ pub fn build(b: *std.Build) void {
         .PLUGINDIR = false,
         .SYSCONFDIR = false,
         .BINARYDIR = false,
-        .SOURCEDIR = src_dir,
-
+        .SOURCEDIR = c_cmocka.builder.root.root_dir.path orelse @panic("Missing root path"),
         .HAVE_ASSERT_H = true,
         .HAVE_DLFCN_H = is_unix,
         .HAVE_INTTYPES_H = true,
